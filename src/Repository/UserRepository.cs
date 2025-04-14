@@ -10,12 +10,12 @@ namespace ProductmanagementCore.Repository
 {
     public interface IUserRepository
     {
-        ValueTask<int> AddAsync(Users tModel);
-        ValueTask<int> DeleteAsync(int id);
-        ValueTask<IEnumerable<Users>> GetAll();
-        ValueTask<Users> FindById(int id);
-        ValueTask<int> UpdateAsync(Users tUsers);
-        ValueTask<IQueryable<Users>> QueryBy(Func<Users, bool> predicate);
+        Task<int> AddAsync(Users tModel);
+        Task<int> DeleteAsync(int id);
+        Task<IEnumerable<Users>> GetAll();
+        Task<Users> FindById(int id);
+        Task<int> UpdateAsync(Users tUsers);
+        Task<IQueryable<Users>> QueryBy(Func<Users, bool> predicate);
     }
     public class UserRepository : GenericReposiory<Users>, IUserRepository
     {
@@ -28,7 +28,7 @@ namespace ProductmanagementCore.Repository
             return "SELECT * FROM [Users] ";
         }
 
-        public override async ValueTask<int> AddAsync(Users tModel)
+        public override async Task<int> AddAsync(Users tModel)
         {
             var sqlCommand = @"INSERT INTO [Users] ([Username],[Firstname],[Lastname],[Email],[Tel])
                             VALUES (@Username,@Firstname,@Lastname,@Email,@Tel)SELECT CAST(SCOPE_IDENTITY() as int)";
@@ -49,7 +49,7 @@ namespace ProductmanagementCore.Repository
 
         }
 
-        public override async ValueTask<int> DeleteAsync(int id)
+        public override async Task<int> DeleteAsync(int id)
         {
             var sqlCommand = string.Format(@"DELETE FROM [Users] WHERE [Id] = @Id");
             return await WithConnection(async conn =>
@@ -59,7 +59,7 @@ namespace ProductmanagementCore.Repository
 
         }
 
-        public override async ValueTask<int> UpdateAsync(Users tModel)
+        public override async Task<int> UpdateAsync(Users tModel)
         {
             var sqlCommand = string.Format(@"UPDATE [Users] SET [Username] = @Username ,[Firstname] = @Firstname ,[Lastname] =@Lastname ,[Email] =@Email ,[Tel] =@Tel,[Password] = @Password WHERE [Id] = @Id");
 
@@ -78,7 +78,7 @@ namespace ProductmanagementCore.Repository
             });
         }
 
-        public override ValueTask<IQueryable<Users>> QueryBy(Func<Users, bool> predicate)
+        public override Task<IQueryable<Users>> QueryBy(Func<Users, bool> predicate)
         {
             throw new System.NotImplementedException();
         }

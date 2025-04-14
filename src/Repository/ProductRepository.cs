@@ -10,12 +10,12 @@ namespace ProductmanagementCore.Repository
 {
     public interface IProductRepository
     {
-        ValueTask<IEnumerable<Products>> GetAll();
-        ValueTask<Products> FindById(int id);
-        ValueTask<int> AddAsync(Products entity);
-        ValueTask<int> UpdateAsync(Products entity);
-        ValueTask<int> DeleteAsync(int id);
-        ValueTask<IQueryable<Products>> QueryBy(Func<Products, bool> predicate);
+        Task<IEnumerable<Products>> GetAll();
+        Task<Products> FindById(int id);
+        Task<int> AddAsync(Products entity);
+        Task<int> UpdateAsync(Products entity);
+        Task<int> DeleteAsync(int id);
+        Task<IQueryable<Products>> QueryBy(Func<Products, bool> predicate);
     }
 
     public class ProductRepository : GenericReposiory<Products>,IProductRepository
@@ -33,7 +33,7 @@ namespace ProductmanagementCore.Repository
 
 
 
-        public override async ValueTask< int> AddAsync(Products entity)
+        public override async Task< int> AddAsync(Products entity)
         {
             const string sqlCommand = @"INSERT INTO [Products] ([Name],[Price]) VALUES (@Name,@Price)SELECT CAST(SCOPE_IDENTITY() as int)";
             return await WithConnection(async conn =>
@@ -47,7 +47,7 @@ namespace ProductmanagementCore.Repository
             });
         }
 
-        public override async ValueTask<int> UpdateAsync(Products entity)
+        public override async Task<int> UpdateAsync(Products entity)
         {
             var sqlCommand = @"UPDATE [Products] SET [Name] = @Name ,[Price] = @Price where [Id] =@Id";
             return await WithConnection(async conn =>
@@ -61,7 +61,7 @@ namespace ProductmanagementCore.Repository
             });
         }
 
-        public override async ValueTask<int> DeleteAsync(int id)
+        public override async Task<int> DeleteAsync(int id)
         {
             var sqlCommand = @"DELETE FROM [Products] WHERE [Id] = @Id";
             return await WithConnection(async conn =>
@@ -70,7 +70,7 @@ namespace ProductmanagementCore.Repository
             });
         }
 
-        public override async ValueTask<IQueryable<Products>> QueryBy(Func<Products, bool> predicate)
+        public override async Task<IQueryable<Products>> QueryBy(Func<Products, bool> predicate)
         {
 
 

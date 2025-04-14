@@ -23,7 +23,7 @@ namespace ProductmanagementCore.Repository
             _connectionString = _configuration.GetConnectionString("DefaultConnection"); 
         }
 
-        protected async ValueTask<T> WithConnection<T>(Func<IDbConnection, Task<T>> getData)
+        protected async Task<T> WithConnection<T>(Func<IDbConnection, Task<T>> getData)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace ProductmanagementCore.Repository
             }
         }
 
-        public async ValueTask<IEnumerable<TModel>> GetAll()
+        public async Task<IEnumerable<TModel>> GetAll()
         {
             return await WithConnection(async conn =>
             {
@@ -93,7 +93,7 @@ namespace ProductmanagementCore.Repository
 
         }
 
-        public async ValueTask<TModel> FindById(int id)
+        public async Task<TModel> FindById(int id)
         {
 
             return await WithConnection(async conn =>
@@ -104,10 +104,10 @@ namespace ProductmanagementCore.Repository
         }
 
         public abstract string CreateSeleteString();
-        public abstract ValueTask<int> UpdateAsync(TModel tModel);
-        public abstract ValueTask<int> DeleteAsync(int id);
-        public abstract ValueTask<int> AddAsync(TModel tModel);
-        public abstract ValueTask<IQueryable<TModel>> QueryBy(Func<TModel, bool> predicate);
+        public abstract Task<int> UpdateAsync(TModel tModel);
+        public abstract Task<int> DeleteAsync(int id);
+        public abstract Task<int> AddAsync(TModel tModel);
+        public abstract Task<IQueryable<TModel>> QueryBy(Func<TModel, bool> predicate);
     }
 
 }
