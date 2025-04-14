@@ -38,7 +38,7 @@ namespace UnitTest
         {
             _autoMock.Mock<IProductRepository>().Setup(method => method.GetAll()).Returns(() => new ValueTask<IEnumerable<Products>>(ProductsMock()));
             var result = (await _productService.GetAll());
-            Assert.AreEqual(result.Count(),ProductsMock().Count());
+            Assert.That(result.Count(),Is.EqualTo(ProductsMock().Count()));
 
         }
 
@@ -50,7 +50,7 @@ namespace UnitTest
             _autoMock.Mock<IProductRepository>().Setup(method => method.FindById(It.IsAny<int>()))
                 .Returns(() => new ValueTask<Products > (dataMockReturn));
             var result = (await _productService.FindById(productId));
-            Assert.AreEqual(result, dataMockReturn);
+            Assert.That(result,Is.EqualTo(dataMockReturn) );
         }
 
 
