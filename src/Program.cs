@@ -38,13 +38,13 @@ builder.Host.ConfigureContainer<ContainerBuilder>(container =>
     container.RegisterAssemblyTypes(serviceAssembly)
         .Where(t => t.Name.EndsWith("Service"))
         .AsImplementedInterfaces()
-        .SingleInstance();
+        .InstancePerLifetimeScope();
 
     var repositoryAssembly = typeof(UserRepository).Assembly;
     container.RegisterAssemblyTypes(repositoryAssembly)
         .Where(t => t.Name.EndsWith("Repository"))
         .AsImplementedInterfaces()
-        .SingleInstance();
+        .InstancePerLifetimeScope();
 });
 
 var app = builder.Build();
